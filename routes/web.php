@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StoreController;
 
-Route::view('/', 'landing');
+Route::view('/', 'layout.app3');
 
 Route::view('/home', 'pages/visitor/home')->name('home');
 
