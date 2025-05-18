@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StoreController;
 
-Route::view('/', 'layout.app3');
+Route::view('/', 'landing');
 
 Route::view('/home', 'pages/visitor/home')->name('home');
 
@@ -26,6 +26,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::view('/admin/dashboard', 'Pages/Admin/Dashboard')->name('admindashboard');
     Route::get('/ctm/page/home', function () {
         return view('customerpages/home');
     })->name('ctm.page.home');
