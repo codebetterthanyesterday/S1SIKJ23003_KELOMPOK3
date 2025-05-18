@@ -18,10 +18,15 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, $guard = null)
     {
-        // Jika sudah login pada guard yang diberikan...
         if (Auth::guard($guard)->check()) {
-            // Ganti '/dashboard' ke route atau URL tujuanmu
-            return redirect()->route('ctm.page.home');
+            $roles = Auth::user()->roles->pluck('role_name')->map(fn($r) => strtolower($r));
+            $redirectTo = '';
+            if ($roles->contains('admin')) {
+                $redirectTo = redirect()->intended('/admin/dashboard');
+            } else {
+                $redirectTo = redirect()->intended('/');
+            }
+            return $redirectTo;
         }
 
         return $next($request);
