@@ -1,3 +1,6 @@
-<div>
-    <!-- He who is contented is rich. - Laozi -->
-</div>
+@extends('layout.app3')
+
+@section('title', 'Dashboard')
+
+@section('content')
+@endsection
