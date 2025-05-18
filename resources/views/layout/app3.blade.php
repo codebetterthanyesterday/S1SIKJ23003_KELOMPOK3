@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="{{ asset('img/Logo-transparent-2.png') }}" type="image/x-icon">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
-    <title>@yield('title') &mdash; {{ config('app.name') }}</title>
+    <title>@yield('title') &mdash; {{ $getUser->username }} &mdash; {{ config('app.name') }}</title>
     <style>
         html,
         body {
