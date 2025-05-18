@@ -30,8 +30,14 @@ class LoginController extends Controller
 
         // tambahkan $remember di Auth::attempt
         if (Auth::attempt($credentials, $remember)) {
+            $redirectTo = '';
+            if (Auth::user()->role == 'admin') {
+                $redirectTo = redirect()->intended('/admin/dashboard');
+            } elseif (Auth::user()->role == 'customer') {
+                $redirectTo = redirect()->intended('/ctm/page/home');
+            }
             $request->session()->regenerate();
-            return redirect()->intended('/ctm/page/home');
+            return $redirectTo->with('success', 'Login berhasil.');
         }
 
         return back()->withErrors([
