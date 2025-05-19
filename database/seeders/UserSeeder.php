@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
     {
 
         // Seeding data admin
-
         // Version 1
         for ($i=1; $i <= 5; $i++) {
             $user = User::firstOrCreate(['username'=>'admin' . $i], [
@@ -31,6 +30,7 @@ class UserSeeder extends Seeder
                     $user->roles()->attach(Role::where('role_name', 'admin')->first()->id_role);
                 }
         }
+
 
         // Version 2
         // foreach (['admin1', 'admin2', 'admin3'] as $username) {
