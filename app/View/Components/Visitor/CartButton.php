@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\visitor;
+namespace App\View\Components\Visitor;
 
 use Closure;
 use Illuminate\Contracts\View\View;
