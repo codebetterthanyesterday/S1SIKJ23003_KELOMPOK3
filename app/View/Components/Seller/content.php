@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Content extends Component
+class content extends Component
 {
     public function __construct()
     {
