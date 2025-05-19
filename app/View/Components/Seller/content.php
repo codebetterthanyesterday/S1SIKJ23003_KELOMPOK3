@@ -1,24 +1,22 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\View\Components\Seller;
+=======
+namespace App\View\Components\Seller; 
+>>>>>>> ebfc4954a7944547f27ae325f91ba0ca757b5deb
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class content extends Component
+class Content extends Component
 {
-    /**
-     * Create a new component instance.
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.seller.content');
