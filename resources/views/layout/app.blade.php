@@ -168,21 +168,14 @@
         <x-visitor.footer></x-visitor.footer>
     </div>
 </body>
+@vite('resources/js/app.js')
 <script>
     const button = document.querySelector('#menu-button');
     const menu = document.querySelector('#menu');
-    // let biggerCategoryItems = document.querySelectorAll('#bigger_category > div');
-    // let smallerCategoryItems = document.querySelectorAll('#smaller_category > div');
     let buttonToTop = document.querySelector('#backtotop');
     let header = document.querySelector('#header');
     let main = document.querySelector('#main');
     let footer = document.querySelector('#footer');
-
-    // function adjustDimension() {
-    //     smallerCategoryItems.forEach(smallerCategoryItem => {
-    //         smallerCategoryItem.style.minHeight = smallerCategoryItem.offsetWidth * 0.5 + "px";
-    //     });
-    // }
 
     window.onscroll = function() {
         let current = "";
@@ -198,10 +191,6 @@
 
         (current == "category_grid" || current == "searching") ? buttonToTop.classList.remove("shown"): buttonToTop
             .classList.add("shown");
-
-        // current != "category_grid" || current != "searching" ?
-        // buttonToTop.classList.add("shown") :
-        // buttonToTop.classList.remove("shown");
     };
 
     buttonToTop.onclick = () => {
@@ -217,11 +206,9 @@
 
     window.addEventListener('load', function() {
         adjustPadding();
-        // adjustDimension();
     });
     window.addEventListener('resize', function() {
         adjustPadding();
-        // adjustDimension();
     });
 
     button.addEventListener('click', () => {

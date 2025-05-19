@@ -3,34 +3,32 @@
 @section('title', 'Product Creation')
 
 @section('content')
-    <form action="" method="post" class="bg-[#fbfbfb] w-full p-8 rounded-lg shadow-md border-[1px] border-[lightgray]">
+    <form action="" method="post" class="bg-[#fbfbfb] w-full p-8 rounded-lg shadow-md border-[1px] border-[lightgray] mt-10">
         @csrf
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-center">Product Info</h2>
         </div>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
-                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                    Name</label>
-                <input type="text" id="first_name"
+                <label for="product_name" class="block mb-2 text-sm font-medium text-gray-900">Product Name</label>
+                <input type="text" id="product_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                     placeholder="John" required />
             </div>
             <div>
-                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                <input type="text" id="last_name"
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Price</label>
+                <input type="text" id="price"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                     required />
             </div>
             <div>
-                <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                <input type="text" id="company"
+                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900">Quantity</label>
+                <input type="text" id="quantity"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                     placeholder="Flowbite" required />
             </div>
             <div>
-                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                    Image</label>
+                <label for="product_image" class="block mb-2 text-sm font-medium text-gray-900">Product Image</label>
                 <div class="flex flex-wrap items-center gap-4">
                     <!-- Placeholder -->
                     <div
@@ -60,17 +58,15 @@
                         Delete
                     </button>
                 </div>
-
             </div>
         </div>
         <div class="mb-6">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                Description</label>
-            <textarea name="" id="" cols="30" rows="5"
+            <label for="product_description" class="block mb-2 text-sm font-medium text-gray-900">Product Description</label>
+            <textarea name="product_description" id="product_description" cols="30" rows="5"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"></textarea>
         </div>
         <div class="mb-6">
-            <h2 id="quick-categories" class="text-2xl font-bold mb-6 text-center">Choose Category</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center">Choose Category</h2>
             <div class="max-w-3xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-6 px-4">
                 <!-- Gourmet Entrées -->
                 <button
@@ -99,7 +95,6 @@
             </div>
         </div>
         <button type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
     </form>
 @endsection
