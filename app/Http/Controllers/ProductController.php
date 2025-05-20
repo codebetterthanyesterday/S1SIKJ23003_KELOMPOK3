@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -21,13 +22,31 @@ class ProductController extends Controller
     public function insert(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'id_store' => 'required|exists:stores,id_store',
+            'id_category' => 'required|exists:product_categories,id_category',
+            'product_name' => 'required|string|max:100',
             'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            
+            'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             // Add other validation rules as needed
         ]);
+
+        // Generate a unique slug
+        $base = Str::slug($validated['product_name']);
+        $slug = $base;
+        $i = 1;
+        while ($this->productModel::where('slug', $slug)->exists()) {
+            $slug = "{$base}-{$i}";
+            $i++;
+        }
+        $validated['slug'] = $slug;
+
+        // Handle product image upload
+        if ($request->hasFile('product_image')) {
+            $validated['product_image'] = $request->file('product_image')
+                ->store('products', 'public');
+        }
 
         $product = $this->productModel::create($validated);
 
