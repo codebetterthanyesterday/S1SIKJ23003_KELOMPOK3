@@ -33,7 +33,6 @@
             @yield('content')
         </x-admin.content>
         <x-admin.footer></x-admin.footer>
-        <div><div></div></div>njsanasnfkja
     </div>
 </body>
 @vite('resources/js/app.js')
