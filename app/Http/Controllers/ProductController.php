@@ -23,6 +23,9 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'description' => 'nullable|string',
+            'stock' => 'required|integer|min:0',
+            
             // Add other validation rules as needed
         ]);
 
