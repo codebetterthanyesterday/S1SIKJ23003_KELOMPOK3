@@ -13,13 +13,24 @@ use Illuminate\Support\Facades\Storage;
 class StoreController extends Controller
 {
 
+    protected $userModel;
+    protected $storeModel;
+    protected $activityLogModel;
+    protected $roleModel;
+
+    public function __construct()
+    {
+        $this->userModel = Auth::user();
+        $this->storeModel = Store::class;
+        $this->activityLogModel = ActivityLog::class;
+        $this->roleModel = Role::class;
+    }
+
     public function openStore(Request $request)
     {
-        $user = Auth::user();
 
         // Pastikan ada role seller & attach ke user
-        $sellerRole = Role::firstOrCreate(['role_name' => 'seller']);
-        $user->roles()->syncWithoutDetaching($sellerRole->id_role);
+        $this->userModel->roles()->syncWithoutDetaching($this->roleModel::firstOrCreate(['role_name' => 'seller'])->id_role);
 
         // Validasi input
         $data = $request->validate([
@@ -32,7 +43,7 @@ class StoreController extends Controller
         $base = Str::slug($data['store_name']);
         $slug = $base;
         $i = 1;
-        while (Store::where('slug', $slug)->exists()) {
+        while ($this->storeModel::where('slug', $slug)->exists()) {
             $slug = "{$base}-{$i}";
             $i++;
         }
@@ -51,15 +62,15 @@ class StoreController extends Controller
         }
 
         // Simpan store
-        $store = $user->stores()->create($data);
+        $store = $this->userModel->stores()->create($data);
 
         // Catat activity
-        ActivityLog::create([
-            'id_user'   => $user->id_user,
+        $this->activityLogModel::create([
+            'id_user'   => $this->userModel->id_user,
             'action'    => 'create',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$user->username} opened store \"{$store->store_name}\"",
+            'notes'     => "User {$this->userModel->username} opened store \"{$store->store_name}\"",
         ]);
 
         return redirect()
@@ -69,8 +80,8 @@ class StoreController extends Controller
 
     public function updateStore(Request $request, $id_store)
     {
-        $user = Auth::user();
-        $store = $user->stores()->where('id_store', $id_store)->firstOrFail();
+        
+        $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
 
         $data = $request->validate([
             'store_name'    => 'required|string|max:100',
@@ -85,7 +96,7 @@ class StoreController extends Controller
             $base = Str::slug($data['store_name']);
             $slug = $base;
             $i = 1;
-            while (Store::where('slug', $slug)->where('id_store', '!=', $store->id_store)->exists()) {
+            while ($this->storeModel::where('slug', $slug)->where('id_store', '!=', $store->id_store)->exists()) {
                 $slug = "{$base}-{$i}";
                 $i++;
             }
@@ -102,12 +113,12 @@ class StoreController extends Controller
 
         $store->update($data);
 
-        ActivityLog::create([
-            'id_user'   => $user->id_user,
+        $this->activityLogModel::create([
+            'id_user'   => $this->userModel->id_user,
             'action'    => 'update',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$user->username} updated store \"{$store->store_name}\"",
+            'notes'     => "User {$this->userModel->username} updated store \"{$store->store_name}\"",
         ]);
 
         return redirect()
@@ -117,8 +128,8 @@ class StoreController extends Controller
 
     public function deleteStore($id_store)
     {
-        $user = Auth::user();
-        $store = $user->stores()->where('id_store', $id_store)->firstOrFail();
+        
+        $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
 
         // Hapus logo dan banner dari storage
         if ($store->store_logo) {
@@ -131,12 +142,12 @@ class StoreController extends Controller
         // Hapus store
         $store->delete();
 
-        ActivityLog::create([
-            'id_user'   => $user->id_user,
+        $this->activityLogModel::create([
+            'id_user'   => $this->userModel->id_user,
             'action'    => 'delete',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$user->username} deleted store \"{$store->store_name}\"",
+            'notes'     => "User {$this->userModel->username} deleted store \"{$store->store_name}\"",
         ]);
 
         return redirect()

@@ -18,5 +18,18 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
+    public function insert(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            // Add other validation rules as needed
+        ]);
+
+        $product = $this->productModel::create($validated);
+
+        return redirect()->route('products.show', $product->id)
+            ->with('success', 'Product created successfully.');
+    }
 
 }
