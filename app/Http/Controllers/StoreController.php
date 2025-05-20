@@ -157,7 +157,7 @@ class StoreController extends Controller
     //     $data = $request->validate([
     //         'store_name'    => 'required|string|max:100',
     //         'description'   => 'required|string',
-    //         'store_address' => 'required|string',
+    //         'store_address' => 'required|string',chrome
     //         // 'store_logo'    => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
     //         // 'store_banner'  => 'nullable|image|mimes:jpeg,png,jpg,svg|max:4096',
     //     ]);
