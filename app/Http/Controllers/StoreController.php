@@ -8,6 +8,7 @@ use App\Models\ActivityLog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
@@ -64,6 +65,83 @@ class StoreController extends Controller
         return redirect()
             ->route('sellerdashboard')
             ->with('success', 'Toko berhasil dibuka!');
+    }
+
+    public function updateStore(Request $request, $id_store)
+    {
+        $user = Auth::user();
+        $store = $user->stores()->where('id_store', $id_store)->firstOrFail();
+
+        $data = $request->validate([
+            'store_name'    => 'required|string|max:100',
+            'description'   => 'required|string',
+            'store_address' => 'required|string',
+            'store_logo'    => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'store_banner'  => 'nullable|image|mimes:jpeg,png,jpg,svg|max:4096',
+        ]);
+
+        // Update slug if store_name changed
+        if ($data['store_name'] !== $store->store_name) {
+            $base = Str::slug($data['store_name']);
+            $slug = $base;
+            $i = 1;
+            while (Store::where('slug', $slug)->where('id_store', '!=', $store->id_store)->exists()) {
+                $slug = "{$base}-{$i}";
+                $i++;
+            }
+            $data['slug'] = $slug;
+        }
+
+        if ($request->hasFile('store_logo')) {
+            $data['store_logo'] = $request->file('store_logo')->store('logos', 'public');
+        }
+
+        if ($request->hasFile('store_banner')) {
+            $data['store_banner'] = $request->file('store_banner')->store('banners', 'public');
+        }
+
+        $store->update($data);
+
+        ActivityLog::create([
+            'id_user'   => $user->id_user,
+            'action'    => 'update',
+            'entity'    => 'store',
+            'target_id' => $store->id_store,
+            'notes'     => "User {$user->username} updated store \"{$store->store_name}\"",
+        ]);
+
+        return redirect()
+            ->route('sellerdashboard')
+            ->with('success', 'Toko berhasil diperbarui!');
+    }
+
+    public function deleteStore($id_store)
+    {
+        $user = Auth::user();
+        $store = $user->stores()->where('id_store', $id_store)->firstOrFail();
+
+        // Hapus logo dan banner dari storage
+        if ($store->store_logo) {
+            Storage::disk('public')->delete($store->store_logo);
+        }
+        if ($store->store_banner) {
+            Storage::disk('public')->delete($store->store_banner);
+        }
+
+        // Hapus store
+        $store->delete();
+
+        ActivityLog::create([
+            'id_user'   => $user->id_user,
+            'action'    => 'delete',
+            'entity'    => 'store',
+            'target_id' => $store->id_store,
+            'notes'     => "User {$user->username} deleted store \"{$store->store_name}\"",
+        ]);
+
+        return redirect()
+            ->route('sellerdashboard')
+            ->with('success', 'Toko berhasil dihapus!');
     }
     // public function createStore(Request $request)
     // {
