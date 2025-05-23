@@ -34,14 +34,12 @@ class ForgotController extends Controller
 
     public function resetProcess(Request $request)
     {
-        // Validasi
         $request->validate([
             'token'    => 'required',
             'email'    => 'required|email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Reset password via broker
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) use ($request) {

@@ -13,6 +13,13 @@ class ProductController extends Controller
     {
         $this->productModel = Product::class;
     }
+
+    public function index ()
+    {
+        $products = $this->productModel::paginate(10);
+        return view('Pages.Admin.Table', compact('products'));
+    }
+
     public function show($id)
     {
         $this->productModel::findOrFail($id);
@@ -29,7 +36,6 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            // Add other validation rules as needed
         ]);
 
         // Generate a unique slug
