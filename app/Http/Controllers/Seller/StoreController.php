@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Seller;
+use App\Http\Controllers\Controller;
 
 use App\Models\Role;
 use App\Models\Store;
@@ -80,7 +81,7 @@ class StoreController extends Controller
 
     public function updateStore(Request $request, $id_store)
     {
-        
+
         $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
 
         $data = $request->validate([
@@ -128,7 +129,7 @@ class StoreController extends Controller
 
     public function deleteStore($id_store)
     {
-        
+
         $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
 
         // Hapus logo dan banner dari storage

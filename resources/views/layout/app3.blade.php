@@ -38,6 +38,7 @@
         <x-admin.footer></x-admin.footer>
     </div>
 </body>
+<script src="https://cdn.datatables.net/v/dt/dt-2.3.1/datatables.min.js" integrity="sha384-1LmfH5u7+DRwux/q4YYqAi+OjwkIVYJdPQijPS9S28cj8AeFnpNCkSVlZgvRdOzb" crossorigin="anonymous"></script>
 @vite('resources/js/app.js')
 <script>
     let header = document.querySelector("header");

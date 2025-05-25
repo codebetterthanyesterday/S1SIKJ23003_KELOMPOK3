@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\ForgotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\StoreController;
+use App\Http\Controllers\Admin\StoreController as AdminStoreController;
+use App\Http\Controllers\Seller\StoreController as SellerStoreController;
+use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\TablePageController;
 
 // Route::view('/', 'landing');
 Route::middleware('guest')->group(function () {
@@ -23,13 +27,18 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::view('/dashboard', 'Pages/Admin/Dashboard')->name('dashboard');
+        Route::get('/table/{filter_table?}', [TablePageController::class, 'getTable'])->name('table');
+    });
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-    Route::view('/admin/dashboard', 'Pages/Admin/Dashboard')->name('admin.dashboard');
-    Route::view('/admin/table', 'Pages/Admin/Table')->name('admin.table');
-    Route::view('/seller/dashboard', 'pages/seller/dashboard')->name('sellerdashboard');
-    Route::view('/seller/store/creation', 'pages/seller/StoreCreation')->name('store.creation');
-    Route::post('/seller/store/creation/process', [StoreController::class, 'openStore'])->name('store.creation.process');
-    Route::view('/seller/products', 'pages/seller/MyProducts')->name('sellerproducts');
-    Route::view('/seller/stores', 'pages/seller/MyStores')->name('sellerstores');
-    Route::view('/seller/product/creation', 'pages/seller/ProductCreation')->name('product.creation');
+    Route::middleware('role:seller')->prefix('seller')->name('seller.')->group(function () {
+        Route::view('/dashboard', 'pages/seller/dashboard')->name('dashboard');
+        Route::view('/store/creation', 'pages/seller/StoreCreation')->name('store.creation');
+        Route::post('/store/creation/process', [SellerStoreController::class, 'openStore'])->name('store.creation.process');
+        Route::view('/products', 'pages/seller/MyProducts')->name('products');
+        Route::view('/stores', 'pages/seller/MyStores')->name('stores');
+        Route::view('/product/creation', 'pages/seller/ProductCreation')->name('product.creation');
+        Route::view('/product/creation', 'pages/seller/ProductCreation')->name('product.creation.process');
+    });
 });
