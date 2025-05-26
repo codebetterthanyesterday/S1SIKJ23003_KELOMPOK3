@@ -57,6 +57,8 @@ class ProductCategoryController extends Controller
     public function getProductByCategory(Request $request, $category_slug)
     {
         $category_slug = $request->query('category_slug', $category_slug);
+        $search_query = $request->query('search');
+        $perPage = (int) $request->query('per_page', 30);
         $config = $this->getTableConfig($category_slug);
         $query = ($config['query'])($this->productModel);
         if (!empty($search_query)) {
@@ -65,5 +67,6 @@ class ProductCategoryController extends Controller
                     ->orWhere('description', 'like', "%{$search_query}%");
             });
         }
+        $result = $query->paginate(10);
     }
 }
