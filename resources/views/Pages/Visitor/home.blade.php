@@ -296,7 +296,7 @@
                                             class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative w-full max-w-xs flex flex-col border border-gray-100 hover:border-green-200 focus-within:ring-2 focus-within:ring-green-500"
                                             :aria-label="item.title" tabindex="0">
                                             <span
-                                                class="absolute left-0 top-4 py-1 px-4 rounded-r-full text-xs font-semibold shadow"
+                                                class="absolute z-[99999] left-0 top-4 py-1 px-4 rounded-r-full text-xs font-semibold shadow"
                                                 :class="item.type === 'Store' ? 'bg-orange-500 text-white' :
                                                     'bg-green-600 text-white'"
                                                 x-text="item.type === 'Store' ? 'Toko' : 'Menu'"

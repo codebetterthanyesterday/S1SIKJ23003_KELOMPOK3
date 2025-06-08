@@ -276,7 +276,7 @@
 
     <!-- Reject Order Modal -->
     <div id="rejectModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50" style="display: none;">
-        <div class="flex items-center justify-center h-full">
+        <div class="flex items-center justify-center mx-auto h-full">
             <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-2xl">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Reject Order</h3>
                 <form id="rejectForm" action="" method="POST">
@@ -304,7 +304,7 @@
 
     <!-- Shipping Modal -->
     <div id="shippingModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50" style="display: none;">
-        <div class="flex items-center justify-center h-full">
+        <div class="flex items-center mx-auto justify-center h-full">
             <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-2xl">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Ship Order</h3>
                 <form id="shippingForm" action="" method="POST">

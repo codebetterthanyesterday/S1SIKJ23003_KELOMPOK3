@@ -36,7 +36,7 @@
                         class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
                     <div id="image-preview-logo" class="flex flex-col items-center justify-center w-full h-full">
                         @if ($store->store_logo)
-                            <img src="{{ asset('storage/' . $store->store_logo) }}" alt="Store Logo" id="preview-img-logo"
+                            <img src="{{ asset('storage/store_logos/' . $store->store_logo) }}" alt="Store Logo" id="preview-img-logo"
                                 class="w-32 h-32 object-cover rounded mb-2">
                         @else
                             <svg class="w-16 h-16 text-gray-400 mb-2" fill="none" stroke="currentColor" stroke-width="2"
@@ -73,7 +73,7 @@
                         class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
                     <div id="image-preview-banner" class="flex flex-col items-center justify-center w-full h-full">
                         @if ($store->store_banner)
-                            <img src="{{ asset('storage/' . $store->store_banner) }}" alt="Store Banner"
+                            <img src="{{ asset('storage/store_banners/' . $store->store_banner) }}" alt="Store Banner"
                                 id="preview-img-banner" class="w-32 h-32 object-cover rounded mb-2">
                         @else
                             <svg class="w-16 h-16 text-gray-400 mb-2" fill="none" stroke="currentColor" stroke-width="2"

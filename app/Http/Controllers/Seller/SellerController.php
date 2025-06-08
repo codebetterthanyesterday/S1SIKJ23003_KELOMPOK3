@@ -146,8 +146,8 @@ class SellerController extends Controller
             ->get();
         $data = $orders->map(function ($order) {
             return [
-                'id' => $order->id,
-                'customer' => $order->user ? $order->user->name : 'N/A',
+                'id' => $order->id_order,
+                'customer' => $order->user ? $order->user->username : 'N/A',
                 'amount' => $order->total_amount,
                 'status' => ucfirst($order->order_status),
                 'date' => $order->created_at->format('Y-m-d H:i'),

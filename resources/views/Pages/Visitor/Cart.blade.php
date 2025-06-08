@@ -25,7 +25,7 @@
                                 <div class="p-6 flex items-center gap-6 cart-product-row"
                                     data-price="{{ $item['product_price'] }}" data-cart-item-id="{{ $item['cartItemID'] }}">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ $item['product_image'] }}" alt="{{ $item['product_name'] }}"
+                                        <img src="{{ asset('storage/product_images/' . $item['product_image']) }}" alt="{{ $item['product_name'] }}"
                                             class="w-24 h-24 rounded-lg object-cover border" />
                                     </div>
                                     <div class="flex-grow">

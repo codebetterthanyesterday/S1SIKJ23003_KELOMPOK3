@@ -51,7 +51,7 @@ class SearchController extends Controller
                 'id' => $item->id_product,
                 'name' => $item->product_name,
                 'description' => $item->description,
-                'image_url' => $item->image ? asset('storage/' . $item->image) : null,
+                'image_url' => $item->product_image ? asset('storage/product_images/' . $item->product_image) : null,
                 'category' => $item->category ? [
                     'id' => $item->category->id_category,
                     'name' => $item->category->category_name
@@ -63,22 +63,22 @@ class SearchController extends Controller
                 'slug' => $item->slug,
             ];
         }),
-        'categories' => $categories->map(function($cat) {
-            return [
-                'id' => $cat->id_category,
-                'name' => $cat->category_name,
-                'description' => $cat->description,
-                'image_url' => $cat->category_image ? asset('storage/' . $cat->category_image) : null,
-                'slug' => $cat->slug,
-            ];
-        }),
+        // 'categories' => $categories->map(function($cat) {
+        //     return [
+        //         'id' => $cat->id_category,
+        //         'name' => $cat->category_name,
+        //         'description' => $cat->description,
+        //         'image_url' => $cat->category_image ? asset('storage/category_images/' . $cat->category_image) : null,
+        //         'slug' => $cat->slug,
+        //     ];
+        // }),
         'stores' => $stores->map(function($store) {
             return [
                 'id' => $store->id_store,
                 'name' => $store->store_name,
                 'description' => $store->description,
                 'address' => $store->store_address,
-                'image_url' => $store->store_logo ? asset('storage/' . $store->store_logo) : null,
+                'image_url' => $store->store_logo ? asset('storage/store_logos/' . $store->store_logo) : null,
                 'slug' => $store->slug,
             ];
         }),

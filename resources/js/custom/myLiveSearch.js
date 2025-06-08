@@ -293,39 +293,39 @@ $(document).ready(function () {
                             )
                             .join("");
                     }
-                    if (data.categories.length) {
-                        html += `
-                    <div class="px-4 pt-3 pb-2 flex items-center gap-2 text-blue-700 font-bold text-sm border-b bg-white sticky top-0 z-10">
-                        <i class="ri-price-tag-3-line text-lg"></i> Kategori
-                    </div>`;
-                        html += data.categories
-                            .map(
-                                (cat) => `
-                        <a href="/category/${
-                            cat.slug
-                        }" class="flex items-center gap-3 p-3 hover:bg-blue-50 transition last:border-b-0 group">
-                            <div class="flex-shrink-0 w-14 h-14 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-                                <img src="${
-                                    cat.image_url ||
-                                    "https://via.placeholder.com/56x56?text=No+Image"
-                                }" class="w-full h-full object-cover" alt="${
-                                    cat.name
-                                }">
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-semibold text-gray-900 truncate group-hover:text-blue-700 text-base">${
-                                    cat.name
-                                }</div>
-                                <div class="text-xs text-gray-400 truncate">${
-                                    cat.slug
-                                }</div>
-                            </div>
-                            <span class="hidden sm:inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full ml-2">Kategori</span>
-                        </a>
-                    `
-                            )
-                            .join("");
-                    }
+                    // if (data.categories.length) {
+                    //     html += `
+                    // <div class="px-4 pt-3 pb-2 flex items-center gap-2 text-blue-700 font-bold text-sm border-b bg-white sticky top-0 z-10">
+                    //     <i class="ri-price-tag-3-line text-lg"></i> Kategori
+                    // </div>`;
+                    //     html += data.categories
+                    //         .map(
+                    //             (cat) => `
+                    //     <a href="/category/${
+                    //         cat.slug
+                    //     }" class="flex items-center gap-3 p-3 hover:bg-blue-50 transition last:border-b-0 group">
+                    //         <div class="flex-shrink-0 w-14 h-14 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
+                    //             <img src="${
+                    //                 cat.image_url ||
+                    //                 "https://via.placeholder.com/56x56?text=No+Image"
+                    //             }" class="w-full h-full object-cover" alt="${
+                    //                 cat.name
+                    //             }">
+                    //         </div>
+                    //         <div class="flex-1 min-w-0">
+                    //             <div class="font-semibold text-gray-900 truncate group-hover:text-blue-700 text-base">${
+                    //                 cat.name
+                    //             }</div>
+                    //             <div class="text-xs text-gray-400 truncate">${
+                    //                 cat.slug
+                    //             }</div>
+                    //         </div>
+                    //         <span class="hidden sm:inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full ml-2">Kategori</span>
+                    //     </a>
+                    // `
+                    //         )
+                    //         .join("");
+                    // }
                     if (data.stores.length) {
                         html += `
                     <div class="px-4 pt-3 pb-2 flex items-center gap-2 text-orange-700 font-bold text-sm border-b bg-white sticky top-0 z-10">

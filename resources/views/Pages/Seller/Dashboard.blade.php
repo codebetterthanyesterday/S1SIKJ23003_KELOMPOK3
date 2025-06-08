@@ -90,7 +90,7 @@
                 </svg>
             </button>
             <div
-                class="absolute -top-4 left-4 w-12 h-12 rounded-lg shadow-lg bg-red-500 flex items-center justify-center text-white">
+                class="absolute -top-4 left-4 w-12 h-12 rounded-lg shadow-lg bg-slate-500 flex items-center justify-center text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -149,7 +149,7 @@
             <div class="bg-white rounded-lg shadow p-6 pt-10 flex flex-col">
                 <div class="text-sm text-gray-500">Out of Stock</div>
                 <div class="mt-1 text-2xl font-bold text-gray-800"><span id="nostock-total"
-                        data-count="{{ $outOfStockProducts }}">0</span> <span
+                        data-count="{{ $outOfStockProducts }}">{{ $outOfStockProducts }}</span> <span
                         class="text-sm text-gray-600">({{ $totalProducts == 0 ? 0 : round(($outOfStockProducts / $totalProducts) * 100, 1) }}%)</span>
                 </div>
             </div>
