@@ -58,10 +58,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Seeding data admin
-        self::adminSeed();
+        // self::adminSeed();
 
         // Seeding data customer
-        self::customerSeed();
+        // self::customerSeed();
 
         // Seeding data seller
         self::sellerSeed();

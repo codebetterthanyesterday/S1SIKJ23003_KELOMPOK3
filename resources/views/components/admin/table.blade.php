@@ -1,5 +1,7 @@
 @props([
     'title' => null, // judul tabel
+    'entity' => null,
+    'AInumber' => null,
     'columns' => [], // array nama kolom (label)
     'fields' => [], // array nama field di model
     'rows' => collect(), // Eloquent Collection atau array data
@@ -13,7 +15,7 @@
         <form method="GET" class="w-full" action="">
             <input type="text" name="search" placeholder="Search..."
                 class="w-full pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white shadow-sm"
-                value="{{ request('search') }}">
+                value="{{ request('search') }}" id="search-input">
             <button type="submit"
                 class="absolute text-center justify-center flex gap-1 items-center right-2 top-2 bottom-2 bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -30,7 +32,7 @@
 
 
 <div class="relative overflow-x-auto">
-    <table class="w-full whitespace-nowrap text-sm text-gray-500 ">
+    <table class="w-full whitespace-nowrap text-sm text-gray-500" id="{{ $entity }}-table">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 @foreach ($columns as $col)
@@ -41,17 +43,20 @@
             </tr>
         </thead>
         <tbody>
-            @php
-                $AInumber = 1;
-            @endphp
             @foreach ($rows as $row)
                 <tr class="bg-white border-b hover:bg-gray-50 border-gray-200 transition duration-300 ease-in-out">
                     @foreach ($fields as $field)
                         <td class="px-6 py-4">
                             @if ($field === 'Number')
                                 {{ $AInumber++ }}
+                            @elseif ($field === 'category_image')
+                            <img src="{{ asset('storage/category_images/' . $row[$field]) }}"
+                            alt="Category Image"
+                            class="w-full max-w-48 border border-gray-100 cursor-zoom-in"
+                            onclick="showImageModal(this.src)">
+                            @else
+                                {{ $row[$field]; }}
                             @endif
-                            {{ $row->{$field} }}
                         </td>
                     @endforeach
                 </tr>
@@ -64,3 +69,6 @@
         </div>
     @endif
 </div>
+@php
+    $GLOBALS['AInumber'] = $AInumber;
+@endphp

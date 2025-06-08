@@ -23,6 +23,7 @@
             margin: 0;
             padding: 0;
             scroll-behavior: smooth;
+            background: #dddddd;
         }
 
         #web_container {
@@ -41,6 +42,7 @@
         </x-seller.content>
         <x-seller.footer></x-seller.footer>
     </div>
+    @stack('scripts')
 </body>
 @vite('resources/js/app.js')
 <script>

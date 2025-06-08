@@ -15,6 +15,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <title>@yield('title') &mdash; {{ config('app.name') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         html,
         body {
@@ -47,13 +48,16 @@
         #bigger_category>div {
             min-height: calc(100vw * 0.2);
         }
+
         #smaller_category>div {
             min-height: calc(100vw * 0.2);
         }
+
         @media (max-width: 767px) {
             #bigger_category>div {
                 min-height: calc(100vw * 0.5);
             }
+
             #smaller_category>div {
                 min-height: calc(100vw * 0.5);
             }
@@ -90,6 +94,28 @@
         #category_grid .category_item>a>span {
             max-width: 80%;
             text-align: center;
+            position: relative;
+            padding-block: 0.7rem
+        }
+
+        #category_grid .category_item>a>span::after {
+            content: '';
+            border-radius: 9999px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            height: 2px;
+            transform: scaleX(0);
+            transform-origin: 50%;
+            transition: all 0.3s linear;
+            background: rgba(255, 255, 255, 1);
+        }
+
+
+        #category_grid .category_item>a:hover>span::after,
+        #category_grid .category_item>a.active-category>span::after {
+            transform: scaleX(1);
         }
 
         #category_grid .category_item>a::after {
@@ -151,7 +177,7 @@
             }
         }
 
-        main > section:nth-child(even) {
+        main>section:nth-child(even) {
             background: #fbfbfb;
         }
     </style>
@@ -163,13 +189,60 @@
         <x-visitor.content>
             <x-visitor.button-to-top></x-visitor.button-to-top>
             @yield('content')
-            <x-visitor.cart-button></x-visitor.cart-button>
         </x-visitor.content>
         <x-visitor.footer></x-visitor.footer>
     </div>
 </body>
 @vite('resources/js/app.js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // For all forms with action logout
+        document.querySelectorAll('form[action$="logout"]').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Logout?',
+                    text: 'Are you sure you want to log out?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, logout',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+        // For all <a> or <button> with text Logout
+        document.querySelectorAll('a,button').forEach(function(el) {
+            if (el.textContent.trim().toLowerCase() === 'logout') {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Logout?',
+                        text: 'Are you sure you want to log out?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, logout',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Find or create a logout form and submit it
+                            let form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = "{{ route('logout') }}";
+                            form.innerHTML = '@csrf';
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    });
+                });
+            }
+        });
+    });
+
     const button = document.querySelector('#menu-button');
     const menu = document.querySelector('#menu');
     let buttonToTop = document.querySelector('#backtotop');

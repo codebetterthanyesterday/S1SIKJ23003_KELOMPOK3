@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Seller;
+
 use App\Http\Controllers\Controller;
 
 use App\Models\Role;
@@ -14,24 +15,46 @@ use Illuminate\Support\Facades\Storage;
 class StoreController extends Controller
 {
 
-    protected $userModel;
+    protected $authenticatedUser;
     protected $storeModel;
     protected $activityLogModel;
     protected $roleModel;
 
     public function __construct()
     {
-        $this->userModel = Auth::user();
+        $this->authenticatedUser = Auth::user();
         $this->storeModel = Store::class;
         $this->activityLogModel = ActivityLog::class;
         $this->roleModel = Role::class;
     }
 
+    public function index()
+    {
+        $stores = $this->storeModel::where('id_user', $this->authenticatedUser->id_user)->get();
+        return view('Pages.Seller.MyStores', compact('stores'));
+    }
+
+    public function show(Store $store)
+    {
+        $store->load('products');
+        return view('Pages.Seller.ShowStore', compact('store'));
+    }
+
+    public function createStore()
+    {
+        $maxReached = $this->authenticatedUser->stores()->count() >= 5;
+        return view('Pages.Seller.StoreCreation', compact('maxReached'));
+    }
+
     public function openStore(Request $request)
     {
+        // Batasi user hanya bisa memiliki maksimal 5 toko
+        if ($this->authenticatedUser->stores()->count() >= 5) {
+            return redirect()->back()->with('error', 'Anda hanya dapat memiliki maksimal 5 toko.');
+        }
 
         // Pastikan ada role seller & attach ke user
-        $this->userModel->roles()->syncWithoutDetaching($this->roleModel::firstOrCreate(['role_name' => 'seller'])->id_role);
+        $this->authenticatedUser->roles()->syncWithoutDetaching($this->roleModel::firstOrCreate(['role_name' => 'seller'])->id_role);
 
         // Validasi input
         $data = $request->validate([
@@ -52,37 +75,36 @@ class StoreController extends Controller
 
         // upload logo via storage disk
         if ($request->hasFile('store_logo')) {
-            $data['store_logo'] = $request->file('store_logo')
-                ->store('logos', 'public');
+            $path = $request->file('store_logo')->store('store_logos', 'public');
+            $data['store_logo'] = basename($path);
         }
 
         // Upload banner via storage disk
         if ($request->hasFile('store_banner')) {
-            $data['store_banner'] = $request->file('store_banner')
-                ->store('banners', 'public');
+            $path = $request->file('store_banner')->store('store_banners', 'public');
+            $data['store_banner'] = basename($path);
         }
 
         // Simpan store
-        $store = $this->userModel->stores()->create($data);
+        $store = $this->authenticatedUser->stores()->create($data);
 
         // Catat activity
         $this->activityLogModel::create([
-            'id_user'   => $this->userModel->id_user,
+            'id_user'   => $this->authenticatedUser->id_user,
             'action'    => 'create',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$this->userModel->username} opened store \"{$store->store_name}\"",
+            'notes'     => "User {$this->authenticatedUser->username} opened store \"{$store->store_name}\"",
         ]);
 
-        return redirect()
-            ->route('sellerdashboard')
+        return redirect()->back()
             ->with('success', 'Toko berhasil dibuka!');
     }
 
     public function updateStore(Request $request, $id_store)
     {
 
-        $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
+        $store = $this->authenticatedUser->stores()->where('id_store', $id_store)->firstOrFail();
 
         $data = $request->validate([
             'store_name'    => 'required|string|max:100',
@@ -115,11 +137,11 @@ class StoreController extends Controller
         $store->update($data);
 
         $this->activityLogModel::create([
-            'id_user'   => $this->userModel->id_user,
+            'id_user'   => $this->authenticatedUser->id_user,
             'action'    => 'update',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$this->userModel->username} updated store \"{$store->store_name}\"",
+            'notes'     => "User {$this->authenticatedUser->username} updated store \"{$store->store_name}\"",
         ]);
 
         return redirect()
@@ -130,7 +152,7 @@ class StoreController extends Controller
     public function deleteStore($id_store)
     {
 
-        $store = $this->userModel->stores()->where('id_store', $id_store)->firstOrFail();
+        $store = $this->authenticatedUser->stores()->where('id_store', $id_store)->firstOrFail();
 
         // Hapus logo dan banner dari storage
         if ($store->store_logo) {
@@ -144,15 +166,55 @@ class StoreController extends Controller
         $store->delete();
 
         $this->activityLogModel::create([
-            'id_user'   => $this->userModel->id_user,
+            'id_user'   => $this->authenticatedUser->id_user,
             'action'    => 'delete',
             'entity'    => 'store',
             'target_id' => $store->id_store,
-            'notes'     => "User {$this->userModel->username} deleted store \"{$store->store_name}\"",
+            'notes'     => "User {$this->authenticatedUser->username} deleted store \"{$store->store_name}\"",
         ]);
 
         return redirect()
-            ->route('sellerdashboard')
+            ->route('seller.stores.list')
             ->with('success', 'Toko berhasil dihapus!');
+    }
+
+    public function edit(Store $store)
+    {
+        return view('Pages.Seller.StoreEdit', compact('store'));
+    }
+
+    public function update(Request $request, Store $store)
+    {
+        $validated = $request->validate([
+            'store_name'    => 'required|string|max:100',
+            'store_logo'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'store_banner'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'store_address' => 'nullable|string|max:255',
+            'description'   => 'nullable|string',
+            'store_status'  => 'required|in:active,inactive',
+        ]);
+
+        // Update store_logo jika ada file baru
+        if ($request->hasFile('store_logo')) {
+            if ($store->store_logo && Storage::disk('public')->exists($store->store_logo)) {
+                Storage::disk('public')->delete($store->store_logo);
+            }
+            $path = $request->file('store_logo')->store('store_logos', 'public');
+            $validated['store_logo'] = basename($path);
+        }
+
+        // Update store_banner jika ada file baru
+        if ($request->hasFile('store_banner')) {
+            if ($store->store_banner && Storage::disk('public')->exists($store->store_banner)) {
+                Storage::disk('public')->delete($store->store_banner);
+            }
+            $path = $request->file('store_banner')->store('store_banners', 'public');
+            $validated['store_banner'] = basename($path);
+        }
+
+        $store->update($validated);
+
+        return redirect()->route('seller.store.show', $store->id_store)
+            ->with('success', 'Store updated successfully!');
     }
 }

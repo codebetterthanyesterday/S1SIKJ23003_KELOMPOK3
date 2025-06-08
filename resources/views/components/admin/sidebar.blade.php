@@ -1,4 +1,4 @@
-<aside id="logo-sidebar-light"
+<aside id="logo-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
     aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
@@ -32,16 +32,24 @@
                 </button>
                 <ul id="dropdown-example-light" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{ route('admin.table', 'customers') }}"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Products</a>
+                        <x-admin.nav-link href="{{ route('admin.table', 'customer') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Customer</x-admin.nav-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.table', 'stores') }}"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Stores</a>
+                        <x-admin.nav-link href="{{ route('admin.table', 'seller') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Seller</x-admin.nav-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.table', 'sellers') }}"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Sellers</a>
+                        <x-admin.nav-link href="{{ route('admin.table', 'product') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Product</x-admin.nav-link>
+                    </li>
+                    <li>
+                        <x-admin.nav-link href="{{ route('admin.table', 'store') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Store</x-admin.nav-link>
+                    </li>
+                    <li>
+                        <x-admin.nav-link href="{{ route('admin.table', 'product-categories') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Product Category</x-admin.nav-link>
                     </li>
                 </ul>
             </li>
@@ -52,7 +60,7 @@
 
                     <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="m21,3H3c-.55,0-1,.45-1,1v16c0,.55.45,1,1,1h18c.55,0,1-.45,1-1V4c0-.55-.45-1-1-1Zm-1,2v2H4v-2h16Zm-12,8h-4v-4h4v4Zm2-4h4v4h-4v-4Zm6,0h4v4h-4v-4Zm-12,10v-4h4v4h-4Zm6,0v-4h4v4h-4Zm6,0v-4h4v4h-4Z"></path>
+                        <path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
                     </svg>
                     <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Creation</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -63,16 +71,12 @@
                 </button>
                 <ul id="dropdown-example2-light" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Products</a>
+                        <x-admin.nav-link href="{{ route('admin.creation', 'product-category') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Product Category</x-admin.nav-link>
                     </li>
                     <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Billing</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Invoice</a>
+                        <x-admin.nav-link href="{{ route('admin.creation', 'user') }}"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">User</x-admin.nav-link>
                     </li>
                 </ul>
             </li>

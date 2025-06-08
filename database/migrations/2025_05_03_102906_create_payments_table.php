@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id('id_payment');
             $table->unsignedBigInteger('id_order');
-            $table->enum('method', ['transfer', 'cod', 'ewallet']);
+            $table->enum('method', ['transfer', 'cod', 'dana', 'shopeepay', 'gopay', 'ovo']);
+            $table->enum('payment_category', ['transfer', 'cod', 'ewallet'])->default('transfer');
             $table->enum('payment_status', ['unpaid', 'paid', 'failed']);
             $table->dateTime('payment_date')->nullable();
             $table->string('payment_document')->nullable();

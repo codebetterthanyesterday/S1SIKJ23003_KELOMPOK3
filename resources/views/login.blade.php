@@ -31,7 +31,12 @@
                 <h2 class="text-3xl font-bold text-gray-700">Sign In</h2>
                 <p class="text-gray-500 mt-2">Enter your credentials to access your account.</p>
             </div>
-            <form action="{{ url('/login/process') }}" method="POST">
+            @error('login')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    {{ $message }}
+                </div>
+            @enderror
+            <form action="{{ route('login.process') }}" method="POST">
                 @csrf
                 <!-- Input Email/username -->
                 <div class="mb-4">
@@ -54,14 +59,12 @@
                     <a href="{{ route('forgot') }}" class="text-sm font-medium text-green-500 hover:text-green-600">Forgot
                         Password?</a>
                 </div>
-                <!-- Tombol Submit -->
                 <button type="submit"
                     class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md transition-colors font-semibold">
                     Sign In
                 </button>
             </form>
 
-            <!-- Tautan ke Halaman Sign Up -->
             <p class="text-sm text-gray-500 mt-6">
                 Don't have an account?
                 <a href="{{ route('register') }}" class="text-green-500 hover:text-green-600 font-medium">Sign Up</a>

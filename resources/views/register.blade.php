@@ -18,7 +18,7 @@
             <div class="absolute inset-0 flex flex-col justify-center backdrop-blur-[3px] items-center p-8 text-white">
                 <h3 class="text-3xl font-bold mb-4">Welcome!</h3>
                 <p class="text-center text-lg max-w-xs">
-                    Join our community and start exploring endless possibilities. Your new journey starts right here.
+                    Order your favorite meals in advance and enjoy fresh, delicious food—ready when you are.
                 </p>
             </div>
         </div>
@@ -31,7 +31,7 @@
                 <p class="text-gray-500 mt-2">Join us today! Only few steps to get started.</p>
             </div>
             <!-- Formulir Register -->
-            <form action="{{ url('/register/process') }}" method="POST">
+            <form action="{{ route('register.process') }}" method="POST">
                 @csrf
                 <!-- Username -->
                 <div class="mb-4">
@@ -74,7 +74,7 @@
                     Sign Up
                 </button>
             </form>
-            <!-- Tautan ke Halaman Login -->
+            
             <p class="text-sm text-gray-500 mt-6">
                 Already have an account?
                 <a href="{{ route('login') }}" class="text-green-500 hover:text-green-600 font-medium">Sign In</a>

@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use App\Models\ProductCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CategorySeeder extends Seeder
 {
@@ -14,7 +15,10 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         foreach (['Gourmet Entrées','Petite Pleasures','Refined Refreshments','Harvest Elegance'] as $categoryName) {
-            ProductCategory::firstOrCreate(['role_name'=>$categoryName]);
+            ProductCategory::firstOrCreate(
+            ['category_name' => $categoryName],
+            ['slug' => Str::slug($categoryName)]
+            );
         }
     }
 }

@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('reset.password') }}">
+        <form method="POST" action="{{ route('password.reset.process') }}">
             @csrf
             {{-- Token dan email --}}
             <input type="hidden" name="token" value="{{ $token }}">

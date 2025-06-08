@@ -59,7 +59,8 @@ class TablePageController extends Controller
         $config = $this->getTableConfig($filter_table);
 
         if (!$config) {
-            return view('pages.admin.table', compact('filter_table'));
+            // return view('pages.admin.table', compact('filter_table'));
+            abort(404, "Table configuration for '{$filter_table}' not found.");
         }
 
         $model = match ($filter_table) {
@@ -97,11 +98,7 @@ class TablePageController extends Controller
         $columns = $config['columns'];
         $fields = $config['fields'];
 
+
         return view('pages.admin.table', compact('filter_table', 'title', 'columns', 'fields', 'rows', 'perPage'));
     }
-
-    // public function changePerPage(Request $request, $filter)
-    // {
-
-    // }
 }

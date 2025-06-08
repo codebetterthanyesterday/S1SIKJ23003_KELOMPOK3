@@ -1,13 +1,13 @@
-<aside id="logo-sidebar-light"
+<aside id="logo-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
     aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <ul class="space-y-2 font-medium">
             <li>
-                <x-seller.nav-link href="{{ route('dashboard') }}"
+                <x-seller.nav-link href="{{ route('seller.dashboard') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M3 12C3 12.5523 3.44772 13 4 13H10C10.5523 13 11 12.5523 11 12V4C11 3.44772 10.5523 3 10 3H4C3.44772 3 3 3.44772 3 4V12ZM3 20C3 20.5523 3.44772 21 4 21H10C10.5523 21 11 20.5523 11 20V16C11 15.4477 10.5523 15 10 15H4C3.44772 15 3 15.4477 3 16V20ZM13 20C13 20.5523 13.4477 21 14 21H20C20.5523 21 21 20.5523 21 20V12C21 11.4477 20.5523 11 20 11H14C13.4477 11 13 11.4477 13 12V20ZM14 3C13.4477 3 13 3.44772 13 4V8C13 8.55228 13.4477 9 14 9H20C20.5523 9 21 8.55228 21 8V4C21 3.44772 20.5523 3 20 3H14Z">
                         </path>
@@ -15,16 +15,35 @@
                 </x-seller.nav-link>
             </li>
             <li>
-                <x-seller.nav-link href="{{ route('store.creation') }}"
+                <x-seller.nav-link href="{{ route('seller.list', 'order') }}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 202.614 202.614"
+                        fill="currentColor">
+                        <path d="M177.91,55.377h-22.589v-1.368C155.311,24.25,131.091,0,101.302,0
+                        C71.503,0,47.292,24.25,47.292,54.009v1.368H24.704L11.495,202.614h179.624L177.91,55.377L177.91,55.377z
+                        M101.302,6.624c19.687,0,36.619,12.105,43.761,29.232c-9.448-14.137-25.5-23.478-43.761-23.478
+                        c-18.231,0-34.313,9.34-43.77,23.507C64.713,18.729,81.635,6.624,101.302,6.624z
+                        M57.297,55.377c4.406-20.263,22.481-35.485,44.024-35.485
+                        c21.582,0,39.618,15.222,44.024,35.485H57.297z">
+                        </path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Orders</span>
+                </x-seller.nav-link>
+            </li>
+            <li>
+                <x-seller.nav-link href="{{ route('seller.creation', 'store') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1c.4 0 .77-.24.92-.62.16-.37.07-.8-.22-1.09l-8.99-9a.996.996 0 0 0-1.41 0l-9.01 9c-.29.29-.37.72-.22 1.09s.52.62.92.62Zm5 0h3v-3h2v3h3v2h-3v3h-2v-3H8z"></path>
+                        <path
+                            d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1c.4 0 .77-.24.92-.62.16-.37.07-.8-.22-1.09l-8.99-9a.996.996 0 0 0-1.41 0l-9.01 9c-.29.29-.37.72-.22 1.09s.52.62.92.62Zm5 0h3v-3h2v3h3v2h-3v3h-2v-3H8z">
+                        </path>
                     </svg><span class="flex-1 ms-3 whitespace-nowrap">New Store</span>
                 </x-seller.nav-link>
             </li>
             <li>
-                <x-seller.nav-link href="{{ route('stores') }}"
+                <x-seller.nav-link href="{{ route('seller.list', 'store') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -36,7 +55,7 @@
                 </x-seller.nav-link>
             </li>
             <li>
-                <x-seller.nav-link href="{{ route('product.creation') }}"
+                <x-seller.nav-link href="{{ route('seller.creation', 'product') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -47,7 +66,7 @@
                 </x-seller.nav-link>
             </li>
             <li>
-                <x-seller.nav-link href="{{ route('sellerproducts') }}"
+                <x-seller.nav-link href="{{ route('seller.list', 'product') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

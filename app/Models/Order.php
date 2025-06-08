@@ -10,7 +10,14 @@ class Order extends Model
     protected $primaryKey = 'id_order';
 
     protected $fillable = [
-        'id_user', 'order_date', 'pickup_time', 'total_amount', 'order_status'
+        'id_user',
+        'order_date',
+        'pickedup_at',
+        'total_amount',
+        'order_status',
+        'tracking_number',
+        'shipping_notes',
+        'rejection_reason'
     ];
 
     public function user()

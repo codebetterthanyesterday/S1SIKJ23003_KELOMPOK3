@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\Middleware\Authenticate;
-use App\Http\Middleware\RedirectIfAuthenticated;
 
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -20,6 +21,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth'  => Authenticate::class,
             // middleware 'guest' untuk mencegah user yang sudah login mengakses halaman guest
             'guest' => RedirectIfAuthenticated::class,
+            // middleware 'role' untuk memeriksa peran user
+            'role'  => RoleMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

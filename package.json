@@ -19,6 +19,7 @@
         "flowbite": "^3.1.2",
         "flyonui": "^2.1.0",
         "jquery": "^3.7.1",
+        "magnific-popup": "^1.2.0",
         "preline": "^3.0.1",
         "simple-datatables": "^10.0.0",
         "sweetalert2": "^11.21.2"

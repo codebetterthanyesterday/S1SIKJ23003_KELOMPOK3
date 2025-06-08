@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('forgot.sendlink') }}">
+        <form method="POST" action="{{ route('forgot.process') }}">
             @csrf
             <div class="mb-4">
                 <input type="email" name="email" value="{{ old('email') }}" required placeholder="Your e-mail address"
