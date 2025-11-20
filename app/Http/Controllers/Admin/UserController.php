@@ -90,9 +90,10 @@ class UserController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->roles()->attach(
-            $this->roleModel::where('role_name', $data['role'])->first()->id_role
-        );
+        $role = $this->roleModel::where('role_name', $data['role'])->first();
+        if ($role) {
+            $user->roles()->attach($role->id_role);
+        }
 
         $this->activityLogModel::create([
             "id_user" => $this->authenticatedUser->id_user,

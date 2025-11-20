@@ -95,8 +95,9 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if ($this->roleModel::where('role_name', 'customer')->first()) {
-            $user->roles()->attach($this->roleModel::where('role_name', 'customer')->first()->id_role);
+        $customerRole = $this->roleModel::where('role_name', 'customer')->first();
+        if ($customerRole) {
+            $user->roles()->attach($customerRole->id_role);
         }
 
         return redirect()

@@ -142,7 +142,7 @@ class PaymentController extends Controller
     public function showConfirmation($orderId)
     {
         $order = Order::with(['details.product'])->findOrFail($orderId);
-        $payment = Payment::where('id_order', $orderId)->firstOrFail();
+        $payment = Payment::where('id_order', $orderId)->first();
 
         // Ensure the order belongs to the authenticated user
         if ($order->id_user !== Auth::id()) {

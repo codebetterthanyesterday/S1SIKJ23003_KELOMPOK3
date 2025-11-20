@@ -63,6 +63,7 @@
                                         Rp{{ number_format($order->total_amount, 0, ',', '.') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
+                                        
                                         @if ($order->order_status === 'pending')
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
@@ -84,10 +85,18 @@
                                                 Completed
                                             </span>
                                         @elseif($order->order_status === 'cancelled')
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                Cancelled
-                                            </span>
+                                            <div class="flex flex-col items-start">
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Cancelled
+                                                </span>
+                                                @if($order->rejection_reason)
+                                                    <span class="text-xs text-gray-500 mt-1 max-w-xs truncate" 
+                                                          title="{{ $order->rejection_reason }}">
+                                                        {{ Str::limit($order->rejection_reason, 40) }}
+                                                    </span>
+                                                @endif
+                                            </div>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">

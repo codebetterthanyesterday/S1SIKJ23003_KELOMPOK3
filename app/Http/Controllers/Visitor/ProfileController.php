@@ -54,13 +54,15 @@ class ProfileController extends Controller
 
         // Handle seller role toggle
         $sellerRole = Role::where('role_name', 'seller')->first();
-        if ($request->input('seller_role') !== null) {
-            if (!$user->roles->contains($sellerRole->id_role)) {
-                $user->roles()->attach($sellerRole->id_role);
-            }
-        } else {
-            if ($user->roles->contains($sellerRole->id_role)) {
-                $user->roles()->detach($sellerRole->id_role);
+        if ($sellerRole) {
+            if ($request->input('seller_role') !== null) {
+                if (!$user->roles->contains($sellerRole->id_role)) {
+                    $user->roles()->attach($sellerRole->id_role);
+                }
+            } else {
+                if ($user->roles->contains($sellerRole->id_role)) {
+                    $user->roles()->detach($sellerRole->id_role);
+                }
             }
         }
 
